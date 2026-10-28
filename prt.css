@@ -1,0 +1,708 @@
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image:url(back.webp) ;
+            background-repeat: no-repeat;
+            background-size: cover;
+        
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgb(0, 0, 0);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            min-height: 80vh;
+        }
+
+        .creator-badge {
+            background: linear-gradient(135deg, #002fff 0%, #c9133a 100%);
+            color: rgb(255, 255, 255);
+            padding: 20px 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(14, 40, 152, 0.4);
+        }
+
+        .creator-badge h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.5em;
+            font-weight: normal;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h2 {
+            color: #5d3e7b;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #44bb97 0%, #764ba2 100%);
+            color: rgb(99, 70, 70);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #2757e7 0%, #a28b4b 100%);
+            color: rgb(255, 255, 255);
+            padding: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .topic-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .topic-card p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .questions-list {
+            list-style: none;
+        }
+
+        .question-item {
+            background-color: beige;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .question-item:hover {
+            background: #7e82a2;
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .question-item strong {
+            color: #764ba2;
+            margin-right: 10px;
+        }
+
+        .answer-view {
+            background: #3b4893;
+            padding: 30px;
+            border-radius: 15px;
+            line-height: 1.8;
+        }
+
+        .answer-view h3 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .question-text {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .answer-text {
+            background: #1e293b;
+            color: #fffae3;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .no-answer {
+            background: #fff3cd;
+            color: #856404;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px dashed #ffc107;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .creator-badge h1 {
+                font-size: 1.8em;
+            }
+
+            .header h2 {
+                font-size: 1.5em;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+
+/* VS Code-inspired console preview */
+.terminal-window {
+    overflow: hidden;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    background: #0d1117;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+    margin: 0 0 22px;
+    color: #c9d1d9;
+    font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+
+.terminal-titlebar {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 14px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+}
+
+.terminal-window-controls {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.terminal-control {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.control-close { background: #ff5f57; }
+.control-minimize { background: #febc2e; }
+.control-maximize { background: #28c840; }
+
+.terminal-tab {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 5px;
+    color: #e6edf3;
+    border-bottom: 2px solid #58a6ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+}
+
+.terminal-tab-icon {
+    color: #58a6ff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.terminal-toolbar {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.terminal-output-label {
+    color: #8b949e;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+}
+
+.copy-output-btn {
+    padding: 6px 10px;
+    background: #21262d;
+    border: 1px solid #3d444d;
+    border-radius: 6px;
+    color: #c9d1d9;
+    font: 600 11px 'Segoe UI', sans-serif;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.copy-output-btn:hover {
+    background: #30363d;
+    border-color: #58a6ff;
+    color: #ffffff;
+}
+
+.copy-output-btn.copied {
+    color: #3fb950;
+    border-color: #238636;
+}
+
+.output-text {
+    display: block;
+    min-height: 112px;
+    max-height: 420px;
+    overflow: auto;
+    margin: 0;
+    padding: 22px 24px 26px;
+    background: #0d1117;
+    color: #d1f7c4;
+    font: 14px/1.8 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    tab-size: 4;
+}
+
+.terminal-statusbar {
+    min-height: 27px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    background: #161b22;
+    border-top: 1px solid #30363d;
+    color: #8b949e;
+    font: 10px/1.3 'Segoe UI', sans-serif;
+    letter-spacing: .5px;
+}
+
+.terminal-status-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #8b949e;
+    font-weight: 700;
+}
+
+.status-indicator {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #3fb950;
+    box-shadow: 0 0 7px rgba(63, 185, 80, .45);
+}
+
+.terminal-status-right {
+    color: #6e7681;
+    white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+    .terminal-titlebar { gap: 10px; padding: 0 10px; }
+    .terminal-window-controls { gap: 5px; }
+    .terminal-control { width: 8px; height: 8px; }
+    .terminal-output-label { display: none; }
+    .output-text { font-size: 12px; padding: 17px 14px 20px; }
+    .terminal-statusbar { padding: 0 8px; font-size: 9px; }
+}
+
+/* DSA version: keep the original layout while allowing manual answer/output entry. */
+body {
+    background-color: #111827;
+}
+
+.answer-editor {
+    display: block;
+    width: 100%;
+    min-height: 270px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    resize: vertical;
+    outline: none;
+}
+
+.answer-editor:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.25);
+}
+
+.output-text[contenteditable="true"] {
+    display: block;
+    min-height: 170px;
+    padding: 22px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    outline: none;
+    cursor: text;
+}
+
+.output-text[contenteditable="true"]:focus {
+    box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.45);
+}
+
+.output-text[contenteditable="true"]:empty::before {
+    content: attr(data-placeholder);
+    color: #6e7681;
+    pointer-events: none;
+}
+
+.save-status {
+    color: #d7defb;
+    font-size: 0.9rem;
+    margin: 8px 0 0;
+}
+
+@media (max-width: 768px) {
+    .answer-editor {
+        min-height: 220px;
+    }
+    .terminal-titlebar {
+        gap: 10px;
+        padding: 0 10px;
+    }
+    .terminal-statusbar {
+        gap: 8px;
+    }
+}
+
+
+/* Reference-style question search, preserving the site's original card/list structure. */
+.topic-header { margin-bottom: 18px; }
+.topic-summary { color: #e2e8f0; margin-top: 5px; font-size: .98rem; }
+.search-label { display: block; color: #f1f5f9; font-weight: 600; margin: 18px 0 8px; }
+.question-search { display: block; width: 100%; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: #111827; font: 16px 'Segoe UI', Tahoma, sans-serif; outline: none; }
+.question-search:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, .22); }
+.question-result-count { color: #dbeafe; text-align: right; font-size: .86rem; margin: 0 2px 14px; }
+.question-empty { list-style: none; background: #fff; color: #475569; border-radius: 10px; padding: 20px; text-align: center; border: 1px dashed #94a3b8; }
+.topic-card:focus-visible, .question-item:focus-visible { outline: 3px solid #fbbf24; outline-offset: 3px; }
+
+/* Compatibility styles for the existing DSA assignment HTML.
+   The original uploaded DSA practice stylesheet above is the design source.
+   Only CSS has been changed; HTML and JavaScript are unchanged. */
+body {
+    background-color: #202020; /* fallback because back.webp is not included in the uploaded ZIP */
+}
+
+.site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, #002fff 0%, #c9133a 100%);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(14, 40, 152, .4);
+    border: 0;
+    min-height: 0;
+    height: auto;
+}
+.site-header .brand-mark {
+    width: auto;
+    height: auto;
+    display: block;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+    font: bold 1em 'Segoe UI', Tahoma, sans-serif;
+    letter-spacing: .12em;
+}
+.site-header .eyebrow {
+    display: block;
+    margin: 0 0 8px;
+    color: #ffe4e8;
+    font: 600 .78rem 'Segoe UI', Tahoma, sans-serif;
+    letter-spacing: .14em;
+}
+.site-header h1 {
+    margin: 0 0 7px;
+    color: #fff;
+    font: normal 2.5em 'Brush Script MT', cursive;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+}
+.site-header .subtitle {
+    margin: 0;
+    color: #fff;
+    font-size: .98rem;
+}
+
+.section-heading {
+    display: block;
+    text-align: center;
+    margin: 0 0 28px;
+}
+.section-heading .eyebrow {
+    display: block;
+    margin: 0 0 8px;
+    color: #764ba2;
+    font: 600 .78rem 'Segoe UI', Tahoma, sans-serif;
+    letter-spacing: .1em;
+}
+.section-heading h2 {
+    margin: 0 0 10px;
+    color: #5d3e7b;
+    font: 700 2em 'Segoe UI', Tahoma, sans-serif;
+    letter-spacing: normal;
+}
+.section-description {
+    margin: 0;
+    color: #e5e7eb;
+    font-size: .97rem;
+    line-height: 1.6;
+}
+
+#topics-view, #questions-view, #answer-view { color: #f8fafc; }
+.topics-grid { margin-top: 30px; }
+.topic-card {
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    border: 0;
+}
+.topic-card:focus-visible, .question-item:focus-visible, .back-button:focus-visible {
+    outline: 3px solid #ffc107;
+    outline-offset: 3px;
+}
+
+.question-search {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    margin: 0 0 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #111827;
+    font: 16px 'Segoe UI', Tahoma, sans-serif;
+    outline: none;
+}
+.question-search:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, .22);
+}
+.search-label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #f1f5f9;
+    font-weight: 600;
+}
+.question-result-count {
+    min-height: 1em;
+    margin: 0 2px 14px;
+    color: #dbeafe;
+    text-align: right;
+    font-size: .86rem;
+}
+.questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+.question-item { width: 100%; text-align: left; font: inherit; }
+.empty-message {
+    background: #fff3cd;
+    color: #856404;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px dashed #ffc107;
+}
+
+/* The original stylesheet's .answer-view and .answer-text look, applied
+   to this assignment HTML's existing class names. */
+.assignment-card {
+    background: #3b4893;
+    padding: 30px;
+    border-radius: 15px;
+    line-height: 1.8;
+    border: 0;
+    box-shadow: none;
+}
+.assignment-card > .eyebrow {
+    color: #fff;
+    margin: 0 0 8px;
+    font-weight: 700;
+}
+.question-text {
+    display: block;
+    background: #fff;
+    color: #202020;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 0 24px;
+    border-left: 4px solid #667eea;
+    font: 600 1.15rem/1.6 'Segoe UI', Tahoma, sans-serif;
+    letter-spacing: normal;
+}
+.content-section {
+    margin: 22px 0 0;
+    border: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: transparent;
+}
+.content-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    padding: 0 0 12px;
+    background: transparent;
+    border: 0;
+}
+.content-heading h3 {
+    margin: 0;
+    color: #fff;
+    font: 700 1.35rem 'Segoe UI', Tahoma, sans-serif;
+}
+.section-number {
+    display: none;
+}
+.code-block {
+    display: block;
+    width: 100%;
+    min-height: 80px;
+    max-height: none;
+    overflow-x: auto;
+    margin: 0;
+    padding: 25px;
+    border: 0;
+    border-radius: 10px;
+    background: #1e293b;
+    color: #fffae3;
+    font: 14px/1.6 'Courier New', monospace;
+    white-space: pre;
+    tab-size: 4;
+}
+.code-block code {
+    font: inherit;
+    color: inherit;
+    white-space: inherit;
+}
+.terminal-window {
+    overflow: hidden;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    background: #0d1117;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, .28);
+    margin: 0 0 10px;
+    color: #c9d1d9;
+    font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+.terminal-titlebar {
+    min-height: 48px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 14px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+}
+.terminal-dot {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #febc2e; }
+.dot-green { background: #28c840; }
+.terminal-title {
+    margin-left: 5px;
+    color: #e6edf3;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.output-block {
+    display: block;
+    min-height: 112px;
+    max-height: 420px;
+    overflow: auto;
+    margin: 0;
+    padding: 22px 24px 26px;
+    background: #0d1117;
+    color: #d1f7c4;
+    font: 14px/1.8 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    tab-size: 4;
+}
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 22px 0 0;
+    min-height: 0;
+    border-top: 1px solid #30363d;
+    color: #d1d5db;
+    font-size: .85rem;
+}
+.hidden { display: none !important; }
+
+@media (max-width: 768px) {
+    .site-header { padding: 20px; }
+    .site-header h1 { font-size: 1.8em; }
+    .section-heading h2 { font-size: 1.5em; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .assignment-card { padding: 20px; }
+    .code-block, .output-block { padding: 17px 14px 20px; font-size: 12px; }
+    .site-footer { flex-direction: column; }
+}
+
