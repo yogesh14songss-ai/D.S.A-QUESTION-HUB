@@ -10463,3 +10463,118 @@ Comparisons for this input: 6`,
     ],
   },
 ];
+
+var currentTopicIndex = -1;
+
+function startWebsite() {
+    showTopics();
+    document.getElementById("question-search").addEventListener("input", showQuestionsList);
+    showAllTopicCards();
+}
+
+function showAllTopicCards() {
+    var container = document.getElementById("topics-container");
+    container.innerHTML = "";
+
+    for (var i = 0; i < topics.length; i++) {
+        var card = document.createElement("button");
+        card.type = "button";
+        card.className = "topic-card";
+
+        var title = document.createElement("h3");
+        title.textContent = topics[i].name;
+
+        var count = document.createElement("p");
+        count.textContent = topics[i].questions.length + " questions";
+
+        card.appendChild(title);
+        card.appendChild(count);
+        card.onclick = makeTopicOpener(i);
+        container.appendChild(card);
+    }
+}
+
+function makeTopicOpener(index) {
+    return function () {
+        openTopic(index);
+    };
+}
+
+function openTopic(index) {
+    currentTopicIndex = index;
+    document.getElementById("topic-title").textContent = topics[index].name;
+    document.getElementById("topic-summary").textContent = topics[index].questions.length + " questions";
+    document.getElementById("question-search").value = "";
+    showQuestionsList();
+
+    document.getElementById("topics-view").className = "hidden";
+    document.getElementById("questions-view").className = "view";
+    document.getElementById("answer-view").className = "hidden";
+}
+
+function showQuestionsList() {
+    if (currentTopicIndex < 0) return;
+
+    var container = document.getElementById("questions-container");
+    var search = document.getElementById("question-search").value.toLowerCase().trim();
+    var visibleCount = 0;
+    container.innerHTML = "";
+
+    for (var i = 0; i < topics[currentTopicIndex].questions.length; i++) {
+        var question = topics[currentTopicIndex].questions[i];
+        if (search && question.q.toLowerCase().indexOf(search) === -1) continue;
+
+        var item = document.createElement("button");
+        item.type = "button";
+        item.className = "question-item";
+
+        var number = document.createElement("strong");
+        number.textContent = (i + 1) + ". ";
+        item.appendChild(number);
+        item.appendChild(document.createTextNode(question.q));
+        item.onclick = makeQuestionOpener(i);
+        container.appendChild(item);
+        visibleCount++;
+    }
+
+    if (visibleCount === 0) {
+        var emptyMessage = document.createElement("p");
+        emptyMessage.className = "empty-message";
+        emptyMessage.textContent = "No questions found.";
+        container.appendChild(emptyMessage);
+    }
+
+    document.getElementById("question-result-count").textContent = visibleCount + (visibleCount === 1 ? " question" : " questions");
+}
+
+function makeQuestionOpener(index) {
+    return function () {
+        openQuestion(index);
+    };
+}
+
+function openQuestion(index) {
+    var question = topics[currentTopicIndex].questions[index];
+    document.getElementById("question-display").textContent = question.q;
+    document.getElementById("answer-display").textContent = question.answer || "Answer has not been added to prt.js yet.";
+    document.getElementById("output-display").textContent = question.output || "Output has not been added to prt.js yet.";
+
+    document.getElementById("topics-view").className = "hidden";
+    document.getElementById("questions-view").className = "hidden";
+    document.getElementById("answer-view").className = "view";
+}
+
+function showTopics() {
+    document.getElementById("topics-view").className = "view";
+    document.getElementById("questions-view").className = "hidden";
+    document.getElementById("answer-view").className = "hidden";
+}
+
+function showQuestions() {
+    document.getElementById("topics-view").className = "hidden";
+    document.getElementById("questions-view").className = "view";
+    document.getElementById("answer-view").className = "hidden";
+}
+
+startWebsite();
+
